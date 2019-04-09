@@ -1,4 +1,4 @@
-var people = [];
+/* var people = [];
 var template = $('#people-template').html();
 
 $('#peopleModule').find('button').on('click', function(){
@@ -20,4 +20,23 @@ $('#peopleModule').find('ul').delegate('i.del', 'click', function(e){
     $remove.remove();
 
     people.splice(i, 1);
-})
+});
+
+ */
+
+ //object literal
+
+ var myModule = {
+     name: 'Cay',
+     age: 27,
+     sayName: function(){
+         alert(this.name);
+     },
+     setName: function(newName) {
+         this.name = newName
+     }
+ };
+
+ myModule.setName('Joy');
+
+ myModule.sayName();
