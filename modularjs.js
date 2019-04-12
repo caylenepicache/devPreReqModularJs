@@ -1,79 +1,40 @@
-(function() {
-    var people ={
-    people: [],
-    template:$('#people-template').html(),
-    init: function(){
+var people = {
+    people: ['Will', 'Steve'],
+    init: function() {
         this.cacheDom();
+        this.bindEvents();
+        this.render();
     },
-    cacheDom: function(){
+    cacheDom: function() {
         this.$el = $('#peopleModule');
         this.$button = this.$el.find('button');
         this.$input = this.$el.find('input');
         this.$ul = this.$el.find('ul');
-        this.$template = this.$el.find('#people-template').html();
+        this.template = this.$el.find('#people-template').html();
     },
-    render: function(){
-        var data = {
-            people: this.people,
+    bindEvents: function() {
+        this.$button.on('click', this.addPerson.bind(this));
+        this.$ul.delegate('i.del', 'click', this.deletePerson.bind(this));
+    },
+    render: function() {
+       var data = {
+           people: this.people,
+       };
+       this.$ul.html(Mustache.render(this.template, data));
+    },
+    addPerson: function() {
+        this.people.push(this.$input.val());
+        this.render();
+        this.$input.val('');
+    },
+    deletePerson: function(event) {
+        var $remove = $(event.target).closest('li');
+        var i = this.$ul.find('li').index($remove);
 
-        }
-        $('#peopleModule').find('ul').html(Mustace.render(template,data));
+        this.people.splice(i, 1);
+        this.render();
     }
+
 };
 
 people.init();
-})()
-
-
-//var people = [];
-//var template = $('#people-template').html();
-
-(function() {
-
-/*
-
-$('#peopleModule').find('button').on('click', function(){
-    people.push($('#peopleModule').find('input').val());
-    // data for mustache template
-
-    var data = {
-        people: people,
-
-    };
-
-    $('#peopleModule').find('ul').html(Mustace.render(template, data));
-});
-
-$('#peopleModule').find('ul').delegate('i.del', 'click', function(e){
-    var $remove = $(e.target).closest('li');
-    var i = $('#peopleModule').find('ul').find('li').index($remove);
-
-    $remove.remove();
-
-    people.splice(i, 1);
-});
-
-*/
-
-})()
-
- 
-
- //object literal
-/*
- var myModule = {
-     name: 'Cay',
-     age: 27,
-     sayName: function(){
-         alert(this.name);
-     },
-     setName: function(newName) {
-         this.name = newName
-     }
- };
-
- myModule.setName('Joy');
-
- myModule.sayName();
-
- */
